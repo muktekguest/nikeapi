@@ -1,10 +1,17 @@
 const ODM = require("mongoose");
 const Product = require("../models/Product");
 
+const buildQ = require("../actions/query.js");
+
 const Products = {
   featured: (request, response) => {
+    const query = buildQ(request.query);
+
+    const { all } = request.query;
+
     Product
-      .find()
+      .find(query)
+      .limit(typeof all !== "undefined" ? 0 : 10)
       .exec()
       .then(shoes => {
         response
@@ -12,7 +19,7 @@ const Products = {
           .json({
             meta: shoes.length,
             data: shoes
-          })
+          });
       })
       .catch(e => {
         response
@@ -30,7 +37,11 @@ const Products = {
       type,
       price,
       url,
-      featured
+      featured,
+      category,
+      closureType,
+      color,
+      size
     } = request.body;
 
     const newShoe = new Product({
@@ -40,7 +51,11 @@ const Products = {
       type,
       price,
       url,
-      featured
+      featured,
+      category,
+      closureType,
+      color,
+      size
     });
 
     newShoe

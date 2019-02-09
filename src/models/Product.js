@@ -7,7 +7,11 @@ const Schema = new ODM.Schema({
   type: String,
   price: Number,
   url: String,
-  featured: Boolean
+  featured: Boolean,
+  category: String,
+  closureType: String,
+  color: String,
+  size: String
 }, {
   versionKey: false,
   timestamps: true
